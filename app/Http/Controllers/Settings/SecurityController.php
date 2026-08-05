@@ -43,8 +43,28 @@ class SecurityController extends Controller
         if (Features::canManageTwoFactorAuthentication()) {
             $request->ensureStateIsValid();
 
-            $props['twoFactorEnabled'] = $request->user()->hasEnabledTwoFactorAuthentication();
+            $user = $request->user();
+
+            $props['twoFactorEnabled'] = $user->hasEnabledTwoFactorAuthentication();
             $props['requiresConfirmation'] = Features::optionEnabled(Features::twoFactorAuthentication(), 'confirm');
+
+            // The QR code, secret and recovery codes are rendered here and passed
+            // as props, so the browser never has to call Fortify's JSON endpoints
+            // itself (ARCHITECTURE §8 — no fetch to internal endpoints).
+            $props['twoFactorSetup'] = $user->two_factor_secret === null ? null : [
+                'qrCodeSvg' => $user->twoFactorQrCodeSvg(),
+                // Older Fortify versions store this encrypted; newer ones cast it.
+                'secretKey' => rescue(
+                    fn (): string => decrypt($user->two_factor_secret),
+                    $user->two_factor_secret,
+                    report: false,
+                ),
+                'confirmed' => $user->hasEnabledTwoFactorAuthentication(),
+            ];
+
+            $props['recoveryCodes'] = $user->hasEnabledTwoFactorAuthentication()
+                ? $user->recoveryCodes()
+                : [];
         }
 
         return Inertia::render('settings/security', $props);

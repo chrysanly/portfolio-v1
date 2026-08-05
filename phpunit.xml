@@ -18,14 +18,25 @@
         </include>
     </source>
     <php>
+        <!--
+            APP_ENV must be exactly `testing`: Laravel's ValidateCsrfToken (and
+            several other guards) bypass themselves via Application::runningUnitTests(),
+            which compares the environment against `testing` literally. Any other
+            value leaves CSRF enforcement on and every POST/PATCH/DELETE test gets
+            a 419 instead of reaching the controller.
+
+            DB_* is pinned to an in-memory SQLite database so RefreshDatabase can
+            never migrate:fresh the developer's `database/database.sqlite`. The
+            engine still matches what this app runs on locally, so the CHECK /
+            UNIQUE behaviour the schema relies on (RULES §7) is exercised for real.
+        -->
         <env name="APP_ENV" value="testing"/>
+        <env name="DB_CONNECTION" value="sqlite"/>
+        <env name="DB_DATABASE" value=":memory:"/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="BROADCAST_CONNECTION" value="null"/>
         <env name="CACHE_STORE" value="array"/>
-        <env name="DB_CONNECTION" value="sqlite"/>
-        <env name="DB_DATABASE" value=":memory:"/>
-        <env name="DB_URL" value=""/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>

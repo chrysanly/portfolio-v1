@@ -178,6 +178,34 @@ stubs/features/{pdf,excel,auth}/   # module stubs, copied into app/ on install
 
 ---
 
+---
+
+## This project: the CJ Roma portfolio
+
+The boilerplate above is the chassis. What this repository actually ships is a
+self-managed portfolio:
+
+- **`/`** — the public portfolio, rendered entirely from the database.
+- **`/admin`** — a PIN-gated content admin for every word on that page.
+
+```bash
+mysql -u root -e "CREATE DATABASE cj_portfolio CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+php artisan migrate
+php artisan db:seed --class="Database\Seeders\PortfolioContentSeeder"
+composer dev
+```
+
+The PIN is stored only as a bcrypt hash in `PORTFOLIO_ADMIN_PIN_HASH`. Change it
+with `php artisan portfolio:pin-hash`. Two independent checks guard every write:
+a confirmed PIN session (`EnsureAdminPinSession`) **and** the PIN in the request
+body (`MatchesAdminPin`, added to every admin FormRequest).
+
+Full build notes — setup, the PIN design, where each piece of content lives, the
+request path for a save, and the deliberate deviations from the rules above — are
+in **[`docs/PORTFOLIO.md`](docs/PORTFOLIO.md)**. The schema is documented in
+`.claude/context/SCHEMA.md` Part B; scope and domain rules in
+`.claude/context/PRD.md`.
+
 ## License
 
 MIT.

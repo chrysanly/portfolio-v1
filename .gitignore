@@ -27,3 +27,13 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Third-party AI skills installed by `npx skills add` / `npx impeccable install`.
+# Reinstallable from the commands in DESIGN_SKILLS_PROMPT.md — 800+ vendored
+# files that would otherwise dwarf the project itself in the repository.
+/.agents
+/.claude/skills
+/skills-lock.json
+
+# Local handoff archive, not source.
+/cj-portfolio-implementation.zip

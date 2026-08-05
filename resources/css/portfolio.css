@@ -1,0 +1,1682 @@
+/*
+ * Portfolio design tokens and component classes.
+ *
+ * Every value here is lifted verbatim from docs/mockups/CJ Roma Portfolio.html,
+ * so the rendered page matches the approved mockup. Tokens are prefixed --pf-
+ * to stay clear of the shadcn tokens in app.css (DESIGN §2: no hex or raw
+ * values in components — components only reference these classes).
+ *
+ * The mockup resized itself from JavaScript; here the same breakpoints are real
+ * media queries (480 / 560 / 640 / 680 / 760 / 860 / 900 / 1060 / 1100).
+ */
+
+:root,
+:root[data-pf-theme='dark'] {
+    --pf-bg: oklch(0.125 0.02 220);
+    --pf-bg2: oklch(0.17 0.022 215);
+    --pf-panel: oklch(0.155 0.02 212);
+    --pf-scrim: oklch(0.125 0.02 220 / 0.9);
+    --pf-line: oklch(0.34 0.02 200);
+    --pf-line2: oklch(0.26 0.02 205);
+    --pf-fg: oklch(0.95 0.012 180);
+    --pf-mid: oklch(0.73 0.025 190);
+    --pf-dim: oklch(0.5 0.02 190);
+    --pf-acc-hue: 170;
+    --pf-acc: oklch(0.8 0.17 var(--pf-acc-hue));
+    --pf-acc-dim: oklch(0.8 0.17 var(--pf-acc-hue) / 0.15);
+    --pf-acc2: oklch(0.74 0.15 300);
+    --pf-deco: 1;
+    --pf-shadow-card: 0 24px 60px oklch(0 0 0 / 0.3);
+    --pf-shadow-panel: 0 14px 40px oklch(0 0 0 / 0.35);
+}
+
+/*
+ * Light-mode neutrals derive their hue from --pf-acc-hue instead of the
+ * mockup's fixed green (~150). The accent is retunable at runtime from the
+ * Tweaks slider, and fixed green neutrals fought every hue but their own — a
+ * red accent sat on a mint page. Chroma is kept low so this reads as tinted
+ * paper and the accent stays the only real colour on the page.
+ */
+:root[data-pf-theme='light'] {
+    --pf-bg: oklch(0.975 0.006 var(--pf-acc-hue));
+    --pf-bg2: oklch(0.945 0.011 var(--pf-acc-hue));
+    --pf-panel: oklch(0.962 0.008 var(--pf-acc-hue));
+    --pf-scrim: oklch(0.975 0.006 var(--pf-acc-hue) / 0.9);
+    --pf-line: oklch(0.75 0.022 var(--pf-acc-hue));
+    --pf-line2: oklch(0.88 0.014 var(--pf-acc-hue));
+    --pf-fg: oklch(0.25 0.022 var(--pf-acc-hue));
+    --pf-mid: oklch(0.44 0.02 var(--pf-acc-hue));
+    /* 0.5 keeps --pf-dim at >=4.5:1 on both --pf-bg and --pf-bg2. It is used for
+       11.5px mono labels (period, company), which WCAG treats as normal text. */
+    --pf-dim: oklch(0.5 0.018 var(--pf-acc-hue));
+    --pf-acc: oklch(0.5 0.15 calc(var(--pf-acc-hue) - 5));
+    --pf-acc-dim: oklch(0.5 0.15 calc(var(--pf-acc-hue) - 5) / 0.1);
+    --pf-acc2: oklch(0.55 0.13 295);
+    --pf-deco: 0.4;
+    --pf-shadow-card: 0 24px 60px oklch(0 0 0 / 0.14);
+    --pf-shadow-panel: 0 14px 40px oklch(0 0 0 / 0.12);
+}
+
+:root {
+    --pf-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --pf-mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --pf-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --pf-ease-io: cubic-bezier(0.77, 0, 0.175, 1);
+    --pf-pad: 44px;
+}
+
+/* ---------------------------------------------------------------- keyframes */
+
+@keyframes pf-blink {
+    0%,
+    45% {
+        opacity: 1;
+    }
+    50%,
+    95% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes pf-drift1 {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+    50% {
+        transform: translate3d(20px, -16px, 0);
+    }
+}
+
+@keyframes pf-drift2 {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+    50% {
+        transform: translate3d(-24px, 18px, 0);
+    }
+}
+
+@keyframes pf-twinkle {
+    0%,
+    100% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 0.9;
+    }
+}
+
+@keyframes pf-aurora {
+    0% {
+        transform: translate3d(-8%, 0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate3d(8%, 0, 0) rotate(6deg);
+    }
+}
+
+@keyframes pf-kenburns {
+    from {
+        transform: scale(1) translate3d(0, 0, 0);
+    }
+    to {
+        transform: scale(1.08) translate3d(-1.5%, -1%, 0);
+    }
+}
+
+@keyframes pf-blend-pulse {
+    0%,
+    100% {
+        opacity: 0.16;
+    }
+    50% {
+        opacity: 0.32;
+    }
+}
+
+/* -------------------------------------------------------------------- shell */
+
+body:has(.pf-root) {
+    background: var(--pf-bg);
+    margin: 0;
+}
+
+.pf-root {
+    position: relative;
+    min-height: 100vh;
+    background: var(--pf-bg);
+    color: var(--pf-fg);
+    font-family: var(--pf-sans);
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    transition:
+        background 240ms ease,
+        color 240ms ease;
+}
+
+/*
+ * `:where()` keeps this at zero specificity, so a component class always wins.
+ * Written as `.pf-root a` it beat `.pf-button--primary` (two selectors vs one)
+ * and painted every button's label in the accent colour — invisible on the
+ * primary button, whose background is that same accent.
+ */
+.pf-root :where(a) {
+    color: var(--pf-acc);
+    text-decoration: none;
+}
+
+.pf-root :where(a):hover {
+    color: var(--pf-fg);
+}
+
+.pf-root img {
+    display: block;
+}
+
+.pf-root :focus-visible {
+    outline: 2px solid var(--pf-acc);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.pf-wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-inline: var(--pf-pad);
+}
+
+.pf-main {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.pf-section {
+    border-bottom: 1px solid var(--pf-line2);
+    scroll-margin-top: 68px;
+    padding-block: 56px 64px;
+}
+
+.pf-section--last {
+    border-bottom: 0;
+}
+
+.pf-mono {
+    font-family: var(--pf-mono);
+}
+
+.pf-gradient-text {
+    background: linear-gradient(100deg, var(--pf-acc), var(--pf-acc2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ------------------------------------------------------------- decor layers */
+
+.pf-deco {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 50%;
+}
+
+.pf-deco--aurora {
+    top: 0;
+    left: 50%;
+    width: 1400px;
+    height: 1400px;
+    margin-left: -700px;
+    opacity: calc(var(--pf-deco) * 0.5);
+    background: conic-gradient(
+        from 0deg at 50% 100%,
+        transparent 0deg,
+        oklch(0.7 0.16 300 / 0.18) 60deg,
+        transparent 120deg,
+        oklch(0.75 0.15 190 / 0.15) 220deg,
+        transparent 300deg
+    );
+    filter: blur(50px);
+    animation: pf-aurora 18s ease-in-out infinite alternate;
+}
+
+.pf-deco--one {
+    top: 1400px;
+    left: -160px;
+    width: 520px;
+    height: 520px;
+    opacity: calc(var(--pf-deco) * 0.5);
+    background: radial-gradient(circle, var(--pf-acc-dim), transparent 70%);
+    filter: blur(20px);
+    animation: pf-drift1 12s ease-in-out infinite;
+}
+
+.pf-deco--two {
+    top: 2600px;
+    right: -140px;
+    width: 460px;
+    height: 460px;
+    opacity: calc(var(--pf-deco) * 0.5);
+    background: radial-gradient(
+        circle,
+        oklch(0.74 0.15 300 / 0.16),
+        transparent 70%
+    );
+    filter: blur(18px);
+    animation: pf-drift2 14s ease-in-out infinite;
+}
+
+.pf-deco--three {
+    top: 3600px;
+    left: 60px;
+    width: 400px;
+    height: 400px;
+    opacity: calc(var(--pf-deco) * 0.45);
+    background: radial-gradient(circle, var(--pf-acc-dim), transparent 70%);
+    filter: blur(16px);
+}
+
+/* ------------------------------------------------------------------- header */
+
+.pf-header {
+    position: relative;
+    z-index: 2;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 26px var(--pf-pad) 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.pf-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pf-brand__pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--pf-acc);
+    box-shadow: 0 0 10px 2px var(--pf-acc-dim);
+    animation: pf-blink 2.4s infinite;
+}
+
+.pf-brand__label {
+    font-family: var(--pf-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--pf-mid);
+}
+
+.pf-status {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--pf-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--pf-dim);
+}
+
+.pf-status__available {
+    color: var(--pf-acc);
+}
+
+.pf-theme-toggle {
+    font-family: var(--pf-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--pf-mid);
+    background: transparent;
+    border: 1px solid var(--pf-line2);
+    border-radius: 20px;
+    padding: 6px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pf-theme-toggle:hover {
+    color: var(--pf-fg);
+    border-color: var(--pf-line);
+}
+
+/* ---------------------------------------------------------------------- nav */
+
+.pf-nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--pf-scrim);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--pf-line2);
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.pf-nav__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-inline: var(--pf-pad);
+    display: flex;
+    gap: 2px;
+}
+
+.pf-nav__link {
+    font-family: var(--pf-mono);
+    font-size: 11px;
+    letter-spacing: 0.07em;
+    color: var(--pf-mid);
+    padding: 14px;
+    border-bottom: 2px solid transparent;
+    transition:
+        color 200ms ease,
+        border-color 200ms ease;
+}
+
+.pf-nav__link[aria-current='true'] {
+    color: var(--pf-fg);
+    border-bottom-color: var(--pf-acc);
+}
+
+/* --------------------------------------------------------------------- hero */
+
+.pf-hero {
+    padding: 70px var(--pf-pad) 64px;
+    border-bottom: 1px solid var(--pf-line2);
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 56px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    scroll-margin-top: 68px;
+}
+
+.pf-hero__veins {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: calc(var(--pf-deco) * 0.6);
+    pointer-events: none;
+}
+
+.pf-spark {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.pf-spark--one {
+    top: 40px;
+    right: 60px;
+    width: 5px;
+    height: 5px;
+    background: var(--pf-acc);
+    box-shadow: 0 0 14px 4px var(--pf-acc-dim);
+    animation: pf-twinkle 2.6s ease-in-out infinite;
+    opacity: calc(var(--pf-deco) * 1);
+}
+
+.pf-spark--two {
+    top: 220px;
+    left: 30%;
+    width: 4px;
+    height: 4px;
+    background: var(--pf-acc2);
+    box-shadow: 0 0 12px 4px oklch(0.74 0.15 300 / 0.5);
+    animation: pf-twinkle 3.2s ease-in-out infinite 0.5s;
+    opacity: calc(var(--pf-deco) * 1);
+}
+
+.pf-hero__body {
+    position: relative;
+    z-index: 2;
+}
+
+.pf-hero__eyebrow {
+    font-family: var(--pf-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    color: var(--pf-acc);
+    margin-bottom: 16px;
+}
+
+.pf-hero__headline {
+    margin: 0;
+    font-size: clamp(34px, 5.2vw, 60px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+    text-wrap: balance;
+}
+
+.pf-hero__summary {
+    margin: 22px 0 0;
+    max-width: 560px;
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: var(--pf-mid);
+}
+
+.pf-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+.pf-button {
+    font-family: var(--pf-mono);
+    font-size: 13px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition:
+        transform 160ms var(--pf-ease-out),
+        border-color 200ms ease,
+        color 200ms ease;
+}
+
+.pf-button:active {
+    transform: scale(0.97);
+}
+
+.pf-button--primary {
+    color: var(--pf-bg);
+    background: var(--pf-acc);
+    font-weight: 600;
+}
+
+.pf-button--primary:hover {
+    color: var(--pf-bg);
+}
+
+.pf-button--outline {
+    color: var(--pf-fg);
+    border-color: var(--pf-line);
+}
+
+.pf-button--ghost {
+    color: var(--pf-mid);
+    border-color: var(--pf-line2);
+}
+
+/*
+ * Boot-in reveal for the hero text.
+ *
+ * Content is visible unless JavaScript has explicitly opted this page into
+ * animation (data-pf-animate on .pf-root). Hiding by default would mean a
+ * script error, a blocked bundle or a slow parse leaves the page blank —
+ * progressive enhancement instead.
+ */
+.pf-boot {
+    transition:
+        opacity 560ms var(--pf-ease-out),
+        transform 560ms var(--pf-ease-out);
+}
+
+.pf-root[data-pf-animate='true'] .pf-boot:not([data-shown='true']) {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+}
+
+.pf-boot--1 {
+    transition-delay: 100ms;
+}
+
+.pf-boot--2 {
+    transition-delay: 210ms;
+}
+
+.pf-boot--3 {
+    transition-delay: 320ms;
+}
+
+.pf-boot--4 {
+    transition-delay: 430ms;
+}
+
+/* ----------------------------------------------------------------- portrait */
+
+.pf-portrait {
+    position: relative;
+    z-index: 2;
+}
+
+.pf-portrait__frame {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    box-shadow: var(--pf-shadow-card);
+}
+
+.pf-portrait__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: pf-kenburns 18s ease-in-out infinite alternate;
+    transform-origin: center 30%;
+}
+
+.pf-portrait__blend {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    background: radial-gradient(
+        circle at 30% 20%,
+        var(--pf-acc),
+        transparent 60%
+    );
+    animation: pf-blend-pulse 6s ease-in-out infinite;
+}
+
+.pf-portrait__scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 -60px 46px -28px var(--pf-bg);
+}
+
+.pf-portrait__corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    opacity: 0.85;
+}
+
+.pf-portrait__corner--tl {
+    top: 10px;
+    left: 10px;
+    border-top: 2px solid var(--pf-acc);
+    border-left: 2px solid var(--pf-acc);
+}
+
+.pf-portrait__corner--tr {
+    top: 10px;
+    right: 10px;
+    border-top: 2px solid var(--pf-acc);
+    border-right: 2px solid var(--pf-acc);
+}
+
+.pf-portrait__corner--bl {
+    bottom: 10px;
+    left: 10px;
+    border-bottom: 2px solid var(--pf-acc);
+    border-left: 2px solid var(--pf-acc);
+}
+
+.pf-portrait__corner--br {
+    bottom: 10px;
+    right: 10px;
+    border-bottom: 2px solid var(--pf-acc);
+    border-right: 2px solid var(--pf-acc);
+}
+
+.pf-portrait__badges {
+    position: absolute;
+    bottom: 12px;
+    left: 16px;
+    right: 16px;
+    font-family: var(--pf-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--pf-acc);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* -------------------------------------------------------------------- stats */
+
+.pf-stats {
+    padding: 44px var(--pf-pad);
+    border-bottom: 1px solid var(--pf-line2);
+}
+
+.pf-stats__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--pf-line2);
+    border: 1px solid var(--pf-line2);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.pf-stat {
+    background: var(--pf-panel);
+    padding: 24px 26px;
+}
+
+.pf-stat__label {
+    font-family: var(--pf-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--pf-dim);
+}
+
+.pf-stat__value {
+    font-size: 34px;
+    margin-top: 8px;
+    font-weight: 600;
+    color: var(--pf-fg);
+}
+
+.pf-stat__value--accent {
+    color: var(--pf-acc);
+}
+
+/* ---------------------------------------------------------- section heading */
+
+.pf-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 32px;
+}
+
+.pf-heading__rule {
+    width: 26px;
+    height: 1px;
+    background: var(--pf-acc);
+}
+
+.pf-heading__title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.pf-heading__note {
+    font-family: var(--pf-mono);
+    font-size: 11px;
+    color: var(--pf-dim);
+    letter-spacing: 0.05em;
+}
+
+/* ------------------------------------------------------------------ profile */
+
+.pf-profile__lead {
+    margin: 0 0 26px;
+    font-size: 21px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: var(--pf-fg);
+    max-width: 740px;
+    text-wrap: pretty;
+}
+
+.pf-profile__closing {
+    margin: 24px 0 0;
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--pf-mid);
+    max-width: 740px;
+}
+
+.pf-table {
+    border: 1px solid var(--pf-line2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.pf-kv {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    border-bottom: 1px solid var(--pf-line2);
+}
+
+.pf-kv:last-child {
+    border-bottom: 0;
+}
+
+.pf-kv__label {
+    padding: 14px 18px;
+    font-family: var(--pf-mono);
+    font-size: 11px;
+    color: var(--pf-dim);
+    background: var(--pf-bg2);
+}
+
+.pf-kv__value {
+    padding: 14px 18px;
+    font-size: 14.5px;
+}
+
+.pf-kv__value--accent {
+    color: var(--pf-acc);
+}
+
+/* ------------------------------------------------------------- capabilities */
+
+.pf-capability {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    border-bottom: 1px solid var(--pf-line2);
+    transition: background 200ms ease;
+}
+
+.pf-capability:last-child {
+    border-bottom: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .pf-capability:hover {
+        background: var(--pf-bg2);
+    }
+}
+
+.pf-capability__name {
+    padding: 17px 18px;
+    background: var(--pf-bg2);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 15px;
+    line-height: 1.35;
+    text-wrap: balance;
+}
+
+.pf-capability__marker {
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    flex: none;
+    /* Baseline alignment pins the marker to the first line of a wrapping
+       label rather than floating to the optical centre of two lines. */
+    transform: translateY(-2px);
+}
+
+.pf-capability__marker--primary {
+    background: var(--pf-acc);
+}
+
+.pf-capability__marker--secondary {
+    background: var(--pf-acc2);
+}
+
+/*
+ * `.pf-root` prefix is load-bearing, not decoration: the element resets at the
+ * end of this file declare `.pf-root ul { padding: 0 }`, which outranks a bare
+ * `.pf-capability__tags` and silently flattened the padding to zero, leaving
+ * the chips flush against the row divider.
+ */
+.pf-root .pf-capability__tags {
+    padding: 14px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    gap: 6px;
+}
+
+/*
+ * Class name must stay in sync with capabilities-section.tsx. This was once
+ * `.pf-tag`, which no component ever used, so every chip rendered as bare text.
+ */
+.pf-capability__tag {
+    font-family: var(--pf-mono);
+    font-size: 11.5px;
+    line-height: 1;
+    color: var(--pf-mid);
+    background: var(--pf-bg);
+    border: 1px solid var(--pf-line2);
+    border-radius: 5px;
+    padding: 6px 9px;
+    transition:
+        color 160ms ease,
+        border-color 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .pf-capability__tag:hover {
+        color: var(--pf-fg);
+        border-color: var(--pf-line);
+    }
+}
+
+/* ------------------------------------------------------------- experience */
+
+.pf-entry {
+    /* 20px button padding + 130px period column + 18px grid gap. Keeps the
+       expanded bullets on the same vertical line as the role above them. */
+    --pf-entry-indent: 168px;
+
+    border: 1px solid var(--pf-line2);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 200ms ease;
+}
+
+.pf-entry:has(.pf-entry__button[aria-expanded='true']) {
+    border-color: var(--pf-line);
+}
+
+.pf-entry:last-child {
+    margin-bottom: 0;
+}
+
+.pf-entry__button {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr) 30px;
+    gap: 18px;
+    align-items: center;
+    padding: 18px 20px;
+    background: var(--pf-panel);
+    width: 100%;
+    font-family: var(--pf-sans);
+    color: var(--pf-fg);
+    text-align: start;
+    transition: background 200ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .pf-entry__button:hover {
+        background: var(--pf-bg2);
+    }
+}
+
+.pf-entry__button:focus-visible {
+    outline: 2px solid var(--pf-acc);
+    outline-offset: -2px;
+}
+
+.pf-entry__period {
+    font-family: var(--pf-mono);
+    font-size: 11.5px;
+    color: var(--pf-dim);
+}
+
+.pf-entry__period--current {
+    color: var(--pf-acc);
+}
+
+/*
+ * Both are `display: block` on purpose. They are spans inside a wrapper span,
+ * so while inline they rendered on one run of text — "Senior Full-Stack
+ * DeveloperAlmutakamela …" — and `margin-top` on the company was inert.
+ */
+.pf-entry__role {
+    display: block;
+    font-size: 18px;
+    line-height: 1.25;
+}
+
+.pf-entry__company {
+    display: block;
+    font-family: var(--pf-mono);
+    font-size: 11.5px;
+    color: var(--pf-dim);
+    margin-top: 5px;
+}
+
+.pf-entry__chevron {
+    text-align: end;
+    font-family: var(--pf-mono);
+    color: var(--pf-dim);
+    transition:
+        transform 240ms var(--pf-ease-out),
+        color 200ms ease;
+}
+
+.pf-entry__button[aria-expanded='true'] .pf-entry__chevron {
+    transform: rotate(45deg);
+    color: var(--pf-acc);
+}
+
+/*
+ * Collapses via grid-template-rows 0fr -> 1fr rather than a max-height cap.
+ * Bullet counts are editable from the admin, so any fixed max-height is a
+ * magic number waiting to clip a long role on a narrow phone; 1fr resolves to
+ * exactly the content height at every viewport. Browsers that cannot
+ * interpolate grid-template-rows still open and close, just without easing.
+ */
+.pf-entry__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    background: var(--pf-bg);
+    transition:
+        grid-template-rows 380ms var(--pf-ease-io),
+        opacity 260ms ease;
+}
+
+.pf-entry__panel-inner {
+    overflow: hidden;
+    min-height: 0;
+}
+
+.pf-entry__panel[data-open='true'] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+/* `.pf-root` prefix required to outrank `.pf-root ul` — see the note on
+   `.pf-root .pf-capability__tags` above. */
+.pf-root .pf-entry__list {
+    margin: 0;
+    padding: 4px 26px 22px var(--pf-entry-indent);
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.pf-entry__item {
+    display: grid;
+    grid-template-columns: 14px minmax(0, 1fr);
+    gap: 10px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--pf-mid);
+    max-width: 74ch;
+}
+
+.pf-entry__dash {
+    color: var(--pf-acc);
+    font-family: var(--pf-mono);
+    font-size: 11px;
+    line-height: 1;
+    padding-top: 7px;
+}
+
+/* --------------------------------------------------------------------- work */
+
+.pf-work__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+/*
+ * Auto-playing marquee, used only past MARQUEE_THRESHOLD projects.
+ *
+ * The track holds the project list twice and travels exactly one copy's width,
+ * so the end state is pixel-identical to the start and the loop is seamless.
+ * That distance is `-50%` minus half a gap: N duplicated cards carry 2N-1 gaps
+ * rather than 2N, so a plain -50% lands half a gap short and the seam jumps.
+ */
+.pf-work__marquee {
+    /* Declared here so the track (and the keyframe, which resolves variables
+       against the animated element) inherits the same single value. */
+    --pf-work-gap: 18px;
+
+    overflow: hidden;
+    /* Cards run out of frame rather than being cut off hard, which is what
+       signals there is more to come without needing arrows or dots. */
+    mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 40px,
+        #000 calc(100% - 40px),
+        transparent 100%
+    );
+}
+
+.pf-work__track {
+    display: flex;
+    gap: var(--pf-work-gap);
+    width: max-content;
+    /* Duration is set inline from the card count so the pixel speed stays the
+       same whether there are four projects or forty. */
+    animation: pf-marquee var(--pf-marquee-duration, 45s) linear infinite;
+}
+
+.pf-work__track > * {
+    flex: 0 0 clamp(258px, 30vw, 350px);
+}
+
+@keyframes pf-marquee {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        transform: translate3d(calc(-50% - (var(--pf-work-gap) / 2)), 0, 0);
+    }
+}
+
+/* Hovering anywhere over the strip holds it; moving away starts it again.
+   focus-within covers keyboard users, who never produce a hover event. */
+.pf-work__marquee:hover .pf-work__track,
+.pf-work__marquee:focus-within .pf-work__track {
+    animation-play-state: paused;
+}
+
+.pf-work-card {
+    border: 1px solid var(--pf-line2);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--pf-panel);
+    transition:
+        transform 220ms var(--pf-ease-out),
+        border-color 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .pf-work-card:hover {
+        transform: translate3d(0, -4px, 0);
+        border-color: var(--pf-acc);
+    }
+}
+
+.pf-work-card__media {
+    height: 170px;
+    border-bottom: 1px solid var(--pf-line2);
+    background: repeating-linear-gradient(
+        45deg,
+        var(--pf-bg2) 0 10px,
+        var(--pf-panel) 10px 20px
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pf-work-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pf-work-card__media-label {
+    font-family: var(--pf-mono);
+    font-size: 11px;
+    color: var(--pf-dim);
+}
+
+.pf-work-card__body {
+    padding: 18px 20px 20px;
+}
+
+.pf-work-card__eyebrow {
+    font-family: var(--pf-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--pf-acc);
+}
+
+.pf-work-card__title {
+    margin: 9px 0 0;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.pf-work-card__text {
+    margin: 8px 0 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--pf-dim);
+}
+
+/* ------------------------------------------------------------------ contact */
+
+.pf-contact {
+    padding-block: 60px 70px;
+}
+
+/*
+ * Statement headline on the left, contact channels stacked as ruled rows on the
+ * right. The headline column is the wider of the two so 62px type breaks on
+ * whole phrases instead of fragmenting into ragged three-word lines.
+ */
+.pf-contact__split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr);
+    gap: 52px;
+    align-items: start;
+}
+
+.pf-contact__headline {
+    margin: 0;
+    font-size: clamp(30px, 5.2vw, 62px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    max-width: 14ch;
+    text-wrap: balance;
+}
+
+/* Single column of hairline-ruled rows — the panel-and-border treatment fought
+   the headline for weight, so the channels are stripped back to rules. */
+.pf-contact__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 6px;
+}
+
+.pf-tile {
+    padding: 18px 4px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid var(--pf-line2);
+    color: var(--pf-fg);
+    transition:
+        background 200ms ease,
+        transform 160ms var(--pf-ease-out);
+}
+
+.pf-contact__grid .pf-tile:first-child {
+    border-top: 1px solid var(--pf-line2);
+}
+
+.pf-tile:hover {
+    color: var(--pf-fg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .pf-tile:hover {
+        background: var(--pf-acc-dim);
+    }
+}
+
+/* Scaling a full-width row reads as the whole list flinching, so the press
+   state is a colour shift and a small nudge instead. */
+.pf-tile:active {
+    background: var(--pf-acc-dim);
+    transform: translate3d(2px, 0, 0);
+}
+
+/* Order 2 pushes the index and badge to the trailing edge of the row. */
+.pf-tile__index {
+    order: 2;
+    flex: none;
+    font-family: var(--pf-mono);
+    font-size: 10px;
+    color: var(--pf-dim);
+}
+
+.pf-tile__index--accent {
+    color: var(--pf-acc);
+}
+
+.pf-tile__title {
+    display: block;
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.pf-tile__value {
+    display: block;
+    font-family: var(--pf-mono);
+    font-size: 11px;
+    color: var(--pf-dim);
+    margin-top: 5px;
+}
+
+/* ------------------------------------------------------------------- footer */
+
+.pf-footer {
+    padding: 22px var(--pf-pad) 44px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: var(--pf-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--pf-dim);
+}
+
+/* ------------------------------------------------------------------- tweaks */
+
+/*
+ * Resting state is a grip plus a cog — roughly 66x34 rather than the old 230px
+ * bar. The panel floats over live content, and at full width it sat on top of
+ * the contact links in one corner and the contact headline in the other. It
+ * only grows when opened, and it can be dragged anywhere (see
+ * use-draggable-panel.ts, which also persists the position).
+ *
+ * bottom/left are the resting anchor. Dragging writes inline left/top and sets
+ * right/bottom to auto, so the two positioning models never fight.
+ */
+.pf-tweaks {
+    position: fixed;
+    bottom: 22px;
+    left: 22px;
+    z-index: 50;
+    width: max-content;
+    background: var(--pf-panel);
+    border: 1px solid var(--pf-line2);
+    border-radius: 10px;
+    box-shadow: var(--pf-shadow-panel);
+    font-family: var(--pf-mono);
+    overflow: hidden;
+}
+
+.pf-tweaks[data-open='true'] {
+    width: 226px;
+}
+
+/* No transition while dragging, or the panel lags behind the pointer. */
+.pf-tweaks[data-dragging='true'] {
+    transition: none;
+    border-color: var(--pf-acc);
+    cursor: grabbing;
+}
+
+.pf-tweaks__bar {
+    display: flex;
+    align-items: stretch;
+}
+
+.pf-tweaks__grip,
+.pf-tweaks__cog {
+    all: unset;
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    width: 33px;
+    height: 33px;
+    color: var(--pf-dim);
+    cursor: pointer;
+    transition: color 160ms ease;
+}
+
+.pf-tweaks__grip {
+    /* Stops a drag on the grip from being read as a page scroll on touch. */
+    touch-action: none;
+    cursor: grab;
+    font-size: 13px;
+    border-right: 1px solid var(--pf-line2);
+}
+
+.pf-tweaks__grip:hover,
+.pf-tweaks__cog:hover {
+    color: var(--pf-fg);
+}
+
+.pf-tweaks__cog[aria-expanded='true'] {
+    color: var(--pf-acc);
+}
+
+.pf-tweaks__grip:focus-visible,
+.pf-tweaks__cog:focus-visible {
+    outline: 2px solid var(--pf-acc);
+    outline-offset: -2px;
+}
+
+.pf-tweaks__body {
+    padding: 12px 14px 14px;
+    border-top: 1px solid var(--pf-line2);
+}
+
+.pf-tweaks__label {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--pf-dim);
+    margin-bottom: 8px;
+}
+
+.pf-tweaks__slider {
+    width: 100%;
+    accent-color: var(--pf-acc);
+    margin-bottom: 12px;
+}
+
+.pf-tweaks__swatches {
+    display: flex;
+    gap: 6px;
+}
+
+.pf-tweaks__swatch {
+    flex: 1;
+    height: 24px;
+    border-radius: 5px;
+    border: 1px solid var(--pf-line2);
+    cursor: pointer;
+}
+
+/* ----------------------------------------------------------------- splash */
+
+/*
+ * Power-on self test. Lands on the page's own vocabulary — mono readout, hairline
+ * rules, a status flag — and reports the real content inventory before wiping up
+ * to reveal the site. See use-splash.ts for the lifecycle; it never runs under
+ * prefers-reduced-motion and only once per tab session.
+ */
+.pf-splash {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: var(--pf-bg);
+    cursor: pointer;
+    /* Wipes upward, so the page appears to be underneath all along. */
+    transition:
+        transform var(--pf-splash-wipe, 460ms) var(--pf-ease-io),
+        opacity var(--pf-splash-wipe, 460ms) ease;
+}
+
+.pf-splash[data-leaving='true'] {
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Scanline wash, faint enough to read as CRT rather than as a texture. */
+.pf-splash::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0 2px,
+        oklch(0 0 0 / 0.22) 2px 3px
+    );
+}
+
+.pf-splash__panel {
+    position: relative;
+    z-index: 1;
+    width: min(430px, 100%);
+    font-family: var(--pf-mono);
+}
+
+.pf-splash__brand {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    color: var(--pf-acc);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--pf-line2);
+}
+
+.pf-splash__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.pf-splash__line {
+    display: grid;
+    grid-template-columns: auto minmax(12px, 1fr) auto;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--pf-mid);
+    opacity: 0;
+    transform: translate3d(-6px, 0, 0);
+    transition:
+        opacity 220ms ease,
+        transform 220ms var(--pf-ease-out);
+}
+
+.pf-splash__line[data-shown='true'] {
+    opacity: 1;
+    transform: none;
+}
+
+/* Dot leader drawn rather than typed, so it stretches with the column. */
+.pf-splash__leader {
+    align-self: center;
+    height: 1px;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--pf-line2) 0 2px,
+        transparent 2px 5px
+    );
+}
+
+.pf-splash__value {
+    color: var(--pf-fg);
+    font-variant-numeric: tabular-nums;
+}
+
+.pf-splash__foot {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px solid var(--pf-line2);
+}
+
+.pf-splash__bar {
+    flex: 1;
+    height: 2px;
+    background: var(--pf-line2);
+    overflow: hidden;
+}
+
+.pf-splash__fill {
+    display: block;
+    height: 100%;
+    background: var(--pf-acc);
+    transform-origin: left center;
+    transition: transform 180ms linear;
+}
+
+.pf-splash__status {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--pf-dim);
+}
+
+.pf-splash__status[data-ready='true'] {
+    color: var(--pf-acc);
+}
+
+.pf-splash__hint {
+    margin: 14px 0 0;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    color: var(--pf-dim);
+    text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------- reveal on scroll */
+
+[data-pf-reveal] {
+    transition:
+        opacity 560ms var(--pf-ease-out),
+        transform 560ms var(--pf-ease-out);
+}
+
+.pf-root[data-pf-animate='true'] [data-pf-reveal]:not([data-shown='true']) {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+}
+
+/* --------------------------------------------------------------- responsive */
+
+@media (max-width: 1099px) {
+    :root {
+        --pf-pad: 36px;
+    }
+}
+
+@media (max-width: 1059px) {
+    .pf-work__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 899px) {
+    /* Below this the headline column can no longer hold 62px type beside the
+       channel list, so the two stack. The grid itself stays one column at every
+       width now — it is a list of rows, not a tile grid. */
+    .pf-contact__split {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 30px;
+    }
+
+    .pf-contact__headline {
+        max-width: 20ch;
+    }
+}
+
+@media (max-width: 859px) {
+    .pf-hero {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 759px) {
+    :root {
+        --pf-pad: 28px;
+    }
+}
+
+@media (max-width: 679px) {
+    .pf-kv,
+    .pf-capability {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .pf-work__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 639px) {
+    .pf-stats__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .pf-entry__button {
+        grid-template-columns: minmax(0, 1fr) 26px;
+    }
+
+    .pf-entry__period {
+        grid-column: 1 / -1;
+    }
+
+    /* The period column is gone here, so there is nothing left to align to. */
+    .pf-entry {
+        --pf-entry-indent: 20px;
+    }
+}
+
+@media (max-width: 559px) {
+    /* One card fills most of the frame, with a sliver of the next showing so the
+       strip still reads as a strip rather than a stack. */
+    .pf-work__track > * {
+        flex: 0 0 74vw;
+    }
+}
+
+@media (max-width: 479px) {
+    :root {
+        --pf-pad: 20px;
+    }
+
+    .pf-tweaks {
+        left: 12px;
+        bottom: 12px;
+    }
+
+    .pf-tweaks[data-open='true'] {
+        width: min(226px, calc(100vw - 24px));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pf-root *,
+    .pf-deco {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.06s !important;
+    }
+
+    .pf-root[data-pf-animate='true'] [data-pf-reveal],
+    .pf-root[data-pf-animate='true'] .pf-boot {
+        opacity: 1;
+        transform: none;
+    }
+
+    /*
+     * The blanket rule above would compress the marquee to 0.01ms and snap it
+     * straight to its end transform, parking a copy's worth of cards off-frame
+     * with no way to reach them. Stop it outright instead and hand the strip
+     * over as an ordinary horizontal scroller, so every project stays reachable
+     * with no motion at all.
+     */
+    .pf-work__marquee {
+        overflow-x: auto;
+        mask-image: none;
+        scroll-snap-type: x mandatory;
+    }
+
+    .pf-work__track {
+        animation: none !important;
+        transform: none !important;
+    }
+
+    .pf-work__track > * {
+        scroll-snap-align: start;
+    }
+}
+
+/* ------------------------------------------------- element resets in-scope */
+
+.pf-root dl,
+.pf-root dt,
+.pf-root dd,
+.pf-root ul,
+.pf-root li,
+.pf-root h1,
+.pf-root h2,
+.pf-root h3,
+.pf-root p {
+    margin: 0;
+}
+
+.pf-root ul {
+    padding: 0;
+    list-style: none;
+}
+
+.pf-capability__tags {
+    margin: 0;
+}
+
+/* --------------------------------------------------------- tweaks swatches */
+
+.pf-tweaks__swatch[data-pf-swatch='170'] {
+    background: oklch(0.8 0.17 170);
+}
+
+.pf-tweaks__swatch[data-pf-swatch='300'] {
+    background: oklch(0.74 0.15 300);
+}
+
+.pf-tweaks__swatch[data-pf-swatch='70'] {
+    background: oklch(0.8 0.16 70);
+}
+
+.pf-tweaks__swatch[data-pf-swatch='221'] {
+    background: oklch(0.75 0.15 221);
+}
+
+.pf-tweaks__swatch[data-pf-swatch='340'] {
+    background: oklch(0.72 0.16 340);
+}

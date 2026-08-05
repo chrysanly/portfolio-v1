@@ -2,26 +2,20 @@ import { createInertiaApp } from '@inertiajs/react';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
-import AppLayout from '@/layouts/app-layout';
-import AuthLayout from '@/layouts/auth-layout';
-import SettingsLayout from '@/layouts/settings/layout';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'CJ Roma';
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
-    layout: (name) => {
-        switch (true) {
-            case name === 'welcome':
-                return null;
-            case name.startsWith('auth/'):
-                return AuthLayout;
-            case name.startsWith('settings/'):
-                return [AppLayout, SettingsLayout];
-            default:
-                return AppLayout;
-        }
-    },
+
+    /*
+     * Every page in this app brings its own chrome: the portfolio renders the
+     * mockup's own shell, and the content admin renders PortfolioAdminLayout.
+     * The starter kit's AppLayout / AuthLayout / SettingsLayout are gone along
+     * with the routes they depended on, so there is no layout to resolve here.
+     */
+    layout: () => null,
+
     strictMode: true,
     withApp(app) {
         return (
@@ -36,5 +30,5 @@ createInertiaApp({
     },
 });
 
-// This will set light / dark mode on load...
+// Applies the visitor's stored light / dark preference to the admin chrome.
 initializeTheme();

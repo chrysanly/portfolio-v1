@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Laravel\Telescope\TelescopeServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,8 +19,8 @@ class AppServiceProvider extends ServiceProvider
     {
         // Telescope is local-only: excluded from auto-discovery (composer.json
         // "dont-discover") and registered here just for the local environment.
-        if ($this->app->environment('local') && class_exists(\Laravel\Telescope\TelescopeServiceProvider::class)) {
-            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+        if ($this->app->environment('local') && class_exists(TelescopeServiceProvider::class)) {
+            $this->app->register(TelescopeServiceProvider::class);
 
             if (class_exists(\App\Providers\TelescopeServiceProvider::class)) {
                 $this->app->register(\App\Providers\TelescopeServiceProvider::class);
