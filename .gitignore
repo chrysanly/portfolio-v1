@@ -7,9 +7,11 @@
 /public/storage
 /storage/*.key
 /storage/pail
-/resources/js/actions
-/resources/js/routes
-/resources/js/wayfinder
+# resources/js/{actions,routes,wayfinder} are Wayfinder output and would normally
+# be generated, not committed. They are tracked because producing them needs PHP
+# plus an installed vendor/, which the Vercel build container does not have — and
+# Vite imports them, so a PHP-less build cannot succeed without them. Regenerate
+# with `php artisan wayfinder:generate` after changing routes or controllers.
 /vendor
 .DS_Store
 .env

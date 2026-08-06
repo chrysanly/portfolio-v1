@@ -18,6 +18,16 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
     const php = env.PHP_EXECUTABLE || 'php';
 
+    /*
+     * Wayfinder needs a working PHP binary and an installed vendor/ to shell out
+     * to `artisan wayfinder:generate`. Vercel runs the build in its generic
+     * container, where neither is guaranteed, so the plugin is skipped there and
+     * the committed output under resources/js/{actions,routes,wayfinder} is used
+     * instead. Set SKIP_WAYFINDER=1 to do the same in any other PHP-less CI.
+     */
+    const skipWayfinder =
+        process.env.SKIP_WAYFINDER === '1' || process.env.VERCEL === '1';
+
     return {
         plugins: [
             laravel({
@@ -43,10 +53,14 @@ export default defineConfig(({ mode }) => {
                 },
             }),
             tailwindcss(),
-            wayfinder({
-                formVariants: true,
-                command: `"${php}" artisan wayfinder:generate`,
-            }),
+            ...(skipWayfinder
+                ? []
+                : [
+                      wayfinder({
+                          formVariants: true,
+                          command: `"${php}" artisan wayfinder:generate`,
+                      }),
+                  ]),
         ],
     };
 });

@@ -1,8 +1,8 @@
 {
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "framework": null,
-    "installCommand": "composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader && npm ci",
-    "buildCommand": "php artisan wayfinder:generate && npm run build && php artisan config:cache && php artisan route:cache && php artisan event:cache",
+    "installCommand": "npm ci && if command -v composer >/dev/null 2>&1; then composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader; else echo 'composer unavailable in build container — relying on the vercel-php builder to install vendor/'; fi",
+    "buildCommand": "npm run build",
     "functions": {
         "api/index.php": {
             "runtime": "vercel-php@0.9.0",
