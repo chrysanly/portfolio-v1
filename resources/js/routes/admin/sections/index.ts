@@ -82,7 +82,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
  * @see app/Http/Controllers/Admin/PageSectionController.php:30
  * @route '/admin/sections/{page_section}'
  */
-export const update = (args: { page_section: string | { public_id: string } } | [page_section: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { page_section: string | number | { public_id: string | number } } | [page_section: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -97,7 +97,7 @@ update.definition = {
  * @see app/Http/Controllers/Admin/PageSectionController.php:30
  * @route '/admin/sections/{page_section}'
  */
-update.url = (args: { page_section: string | { public_id: string } } | [page_section: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions) => {
+update.url = (args: { page_section: string | number | { public_id: string | number } } | [page_section: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { page_section: args }
     }
@@ -130,7 +130,7 @@ update.url = (args: { page_section: string | { public_id: string } } | [page_sec
  * @see app/Http/Controllers/Admin/PageSectionController.php:30
  * @route '/admin/sections/{page_section}'
  */
-update.put = (args: { page_section: string | { public_id: string } } | [page_section: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { page_section: string | number | { public_id: string | number } } | [page_section: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -140,7 +140,7 @@ update.put = (args: { page_section: string | { public_id: string } } | [page_sec
  * @see app/Http/Controllers/Admin/PageSectionController.php:30
  * @route '/admin/sections/{page_section}'
  */
-    const updateForm = (args: { page_section: string | { public_id: string } } | [page_section: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { page_section: string | number | { public_id: string | number } } | [page_section: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -155,7 +155,7 @@ update.put = (args: { page_section: string | { public_id: string } } | [page_sec
  * @see app/Http/Controllers/Admin/PageSectionController.php:30
  * @route '/admin/sections/{page_section}'
  */
-        updateForm.put = (args: { page_section: string | { public_id: string } } | [page_section: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { page_section: string | number | { public_id: string | number } } | [page_section: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',

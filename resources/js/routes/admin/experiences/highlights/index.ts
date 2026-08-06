@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:29
  * @route '/admin/experiences/{experience}/highlights'
  */
-export const store = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const store = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -19,7 +19,7 @@ store.definition = {
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:29
  * @route '/admin/experiences/{experience}/highlights'
  */
-store.url = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions) => {
+store.url = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { experience: args }
     }
@@ -52,7 +52,7 @@ store.url = (args: { experience: string | { public_id: string } } | [experience:
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:29
  * @route '/admin/experiences/{experience}/highlights'
  */
-store.post = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+store.post = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
@@ -62,7 +62,7 @@ store.post = (args: { experience: string | { public_id: string } } | [experience
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:29
  * @route '/admin/experiences/{experience}/highlights'
  */
-    const storeForm = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const storeForm = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(args, options),
         method: 'post',
     })
@@ -72,7 +72,7 @@ store.post = (args: { experience: string | { public_id: string } } | [experience
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:29
  * @route '/admin/experiences/{experience}/highlights'
  */
-        storeForm.post = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        storeForm.post = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(args, options),
             method: 'post',
         })
@@ -83,7 +83,7 @@ store.post = (args: { experience: string | { public_id: string } } | [experience
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:38
  * @route '/admin/experiences/{experience}/highlights/{highlight}'
  */
-export const update = (args: { experience: string | { public_id: string }, highlight: string | { public_id: string } } | [experience: string | { public_id: string }, highlight: string | { public_id: string } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -98,7 +98,7 @@ update.definition = {
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:38
  * @route '/admin/experiences/{experience}/highlights/{highlight}'
  */
-update.url = (args: { experience: string | { public_id: string }, highlight: string | { public_id: string } } | [experience: string | { public_id: string }, highlight: string | { public_id: string } ], options?: RouteQueryOptions) => {
+update.url = (args: { experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     experience: args[0],
@@ -128,7 +128,7 @@ update.url = (args: { experience: string | { public_id: string }, highlight: str
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:38
  * @route '/admin/experiences/{experience}/highlights/{highlight}'
  */
-update.put = (args: { experience: string | { public_id: string }, highlight: string | { public_id: string } } | [experience: string | { public_id: string }, highlight: string | { public_id: string } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -137,7 +137,7 @@ update.put = (args: { experience: string | { public_id: string }, highlight: str
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:38
  * @route '/admin/experiences/{experience}/highlights/{highlight}'
  */
-update.patch = (args: { experience: string | { public_id: string }, highlight: string | { public_id: string } } | [experience: string | { public_id: string }, highlight: string | { public_id: string } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -147,7 +147,7 @@ update.patch = (args: { experience: string | { public_id: string }, highlight: s
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:38
  * @route '/admin/experiences/{experience}/highlights/{highlight}'
  */
-    const updateForm = (args: { experience: string | { public_id: string }, highlight: string | { public_id: string } } | [experience: string | { public_id: string }, highlight: string | { public_id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -162,7 +162,7 @@ update.patch = (args: { experience: string | { public_id: string }, highlight: s
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:38
  * @route '/admin/experiences/{experience}/highlights/{highlight}'
  */
-        updateForm.put = (args: { experience: string | { public_id: string }, highlight: string | { public_id: string } } | [experience: string | { public_id: string }, highlight: string | { public_id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -176,7 +176,7 @@ update.patch = (args: { experience: string | { public_id: string }, highlight: s
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:38
  * @route '/admin/experiences/{experience}/highlights/{highlight}'
  */
-        updateForm.patch = (args: { experience: string | { public_id: string }, highlight: string | { public_id: string } } | [experience: string | { public_id: string }, highlight: string | { public_id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.patch = (args: { experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PATCH',
@@ -192,7 +192,7 @@ update.patch = (args: { experience: string | { public_id: string }, highlight: s
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:49
  * @route '/admin/experiences/{experience}/highlights/{highlight}'
  */
-export const destroy = (args: { experience: string | { public_id: string }, highlight: string | { public_id: string } } | [experience: string | { public_id: string }, highlight: string | { public_id: string } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -207,7 +207,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:49
  * @route '/admin/experiences/{experience}/highlights/{highlight}'
  */
-destroy.url = (args: { experience: string | { public_id: string }, highlight: string | { public_id: string } } | [experience: string | { public_id: string }, highlight: string | { public_id: string } ], options?: RouteQueryOptions) => {
+destroy.url = (args: { experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     experience: args[0],
@@ -237,7 +237,7 @@ destroy.url = (args: { experience: string | { public_id: string }, highlight: st
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:49
  * @route '/admin/experiences/{experience}/highlights/{highlight}'
  */
-destroy.delete = (args: { experience: string | { public_id: string }, highlight: string | { public_id: string } } | [experience: string | { public_id: string }, highlight: string | { public_id: string } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } ], options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -247,7 +247,7 @@ destroy.delete = (args: { experience: string | { public_id: string }, highlight:
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:49
  * @route '/admin/experiences/{experience}/highlights/{highlight}'
  */
-    const destroyForm = (args: { experience: string | { public_id: string }, highlight: string | { public_id: string } } | [experience: string | { public_id: string }, highlight: string | { public_id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -262,7 +262,7 @@ destroy.delete = (args: { experience: string | { public_id: string }, highlight:
  * @see app/Http/Controllers/Admin/ExperienceHighlightController.php:49
  * @route '/admin/experiences/{experience}/highlights/{highlight}'
  */
-        destroyForm.delete = (args: { experience: string | { public_id: string }, highlight: string | { public_id: string } } | [experience: string | { public_id: string }, highlight: string | { public_id: string } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number }, highlight: string | number | { public_id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

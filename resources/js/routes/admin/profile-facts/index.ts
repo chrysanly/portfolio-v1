@@ -137,7 +137,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/Admin/ProfileFactController.php:43
  * @route '/admin/profile-facts/{profile_fact}'
  */
-export const update = (args: { profile_fact: string | { public_id: string } } | [profile_fact: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { profile_fact: string | number | { public_id: string | number } } | [profile_fact: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -152,7 +152,7 @@ update.definition = {
  * @see app/Http/Controllers/Admin/ProfileFactController.php:43
  * @route '/admin/profile-facts/{profile_fact}'
  */
-update.url = (args: { profile_fact: string | { public_id: string } } | [profile_fact: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions) => {
+update.url = (args: { profile_fact: string | number | { public_id: string | number } } | [profile_fact: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { profile_fact: args }
     }
@@ -185,7 +185,7 @@ update.url = (args: { profile_fact: string | { public_id: string } } | [profile_
  * @see app/Http/Controllers/Admin/ProfileFactController.php:43
  * @route '/admin/profile-facts/{profile_fact}'
  */
-update.put = (args: { profile_fact: string | { public_id: string } } | [profile_fact: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { profile_fact: string | number | { public_id: string | number } } | [profile_fact: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -194,7 +194,7 @@ update.put = (args: { profile_fact: string | { public_id: string } } | [profile_
  * @see app/Http/Controllers/Admin/ProfileFactController.php:43
  * @route '/admin/profile-facts/{profile_fact}'
  */
-update.patch = (args: { profile_fact: string | { public_id: string } } | [profile_fact: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { profile_fact: string | number | { public_id: string | number } } | [profile_fact: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -204,7 +204,7 @@ update.patch = (args: { profile_fact: string | { public_id: string } } | [profil
  * @see app/Http/Controllers/Admin/ProfileFactController.php:43
  * @route '/admin/profile-facts/{profile_fact}'
  */
-    const updateForm = (args: { profile_fact: string | { public_id: string } } | [profile_fact: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { profile_fact: string | number | { public_id: string | number } } | [profile_fact: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -219,7 +219,7 @@ update.patch = (args: { profile_fact: string | { public_id: string } } | [profil
  * @see app/Http/Controllers/Admin/ProfileFactController.php:43
  * @route '/admin/profile-facts/{profile_fact}'
  */
-        updateForm.put = (args: { profile_fact: string | { public_id: string } } | [profile_fact: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { profile_fact: string | number | { public_id: string | number } } | [profile_fact: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -233,7 +233,7 @@ update.patch = (args: { profile_fact: string | { public_id: string } } | [profil
  * @see app/Http/Controllers/Admin/ProfileFactController.php:43
  * @route '/admin/profile-facts/{profile_fact}'
  */
-        updateForm.patch = (args: { profile_fact: string | { public_id: string } } | [profile_fact: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.patch = (args: { profile_fact: string | number | { public_id: string | number } } | [profile_fact: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PATCH',
@@ -249,7 +249,7 @@ update.patch = (args: { profile_fact: string | { public_id: string } } | [profil
  * @see app/Http/Controllers/Admin/ProfileFactController.php:50
  * @route '/admin/profile-facts/{profile_fact}'
  */
-export const destroy = (args: { profile_fact: string | { public_id: string } } | [profile_fact: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { profile_fact: string | number | { public_id: string | number } } | [profile_fact: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -264,7 +264,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Admin/ProfileFactController.php:50
  * @route '/admin/profile-facts/{profile_fact}'
  */
-destroy.url = (args: { profile_fact: string | { public_id: string } } | [profile_fact: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions) => {
+destroy.url = (args: { profile_fact: string | number | { public_id: string | number } } | [profile_fact: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { profile_fact: args }
     }
@@ -297,7 +297,7 @@ destroy.url = (args: { profile_fact: string | { public_id: string } } | [profile
  * @see app/Http/Controllers/Admin/ProfileFactController.php:50
  * @route '/admin/profile-facts/{profile_fact}'
  */
-destroy.delete = (args: { profile_fact: string | { public_id: string } } | [profile_fact: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { profile_fact: string | number | { public_id: string | number } } | [profile_fact: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -307,7 +307,7 @@ destroy.delete = (args: { profile_fact: string | { public_id: string } } | [prof
  * @see app/Http/Controllers/Admin/ProfileFactController.php:50
  * @route '/admin/profile-facts/{profile_fact}'
  */
-    const destroyForm = (args: { profile_fact: string | { public_id: string } } | [profile_fact: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { profile_fact: string | number | { public_id: string | number } } | [profile_fact: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -322,7 +322,7 @@ destroy.delete = (args: { profile_fact: string | { public_id: string } } | [prof
  * @see app/Http/Controllers/Admin/ProfileFactController.php:50
  * @route '/admin/profile-facts/{profile_fact}'
  */
-        destroyForm.delete = (args: { profile_fact: string | { public_id: string } } | [profile_fact: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { profile_fact: string | number | { public_id: string | number } } | [profile_fact: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',
