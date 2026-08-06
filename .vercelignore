@@ -4,7 +4,6 @@
 /.agents
 /.claude
 /.codex
-/database/database.sqlite
 /node_modules
 /phpunit.xml
 /DESIGN_SKILLS_PROMPT.md

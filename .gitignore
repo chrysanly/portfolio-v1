@@ -15,8 +15,11 @@
 /vendor
 .DS_Store
 .env
-.env.backup
-.env.production
+# Catches .env.bak, .env.local, .env.production and any other variant, so a
+# throwaway copy of a populated .env can never be committed by accident. The
+# tracked template is re-allowed below.
+.env.*
+!.env.example
 .phpactor.json
 .phpunit.result.cache
 Homestead.json

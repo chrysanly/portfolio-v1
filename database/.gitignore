@@ -1,1 +1,15 @@
-*.sqlite*
+# database.sqlite is tracked on purpose: it is the deployed content store.
+#
+# Production is read-only — Vercel's filesystem cannot be written to — so the
+# admin can only save on your machine. The workflow is: edit through /admin
+# locally, commit the updated database.sqlite, push, redeploy.
+#
+# This requires SESSION_DRIVER=cookie and CACHE_STORE=array in production. With
+# either left on the `database` driver, an ordinary page view attempts a write
+# and returns a 500 (verified: "attempt to write a readonly database").
+#
+# The sidecar journal/WAL files are still ignored; only the database itself is
+# committed.
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm

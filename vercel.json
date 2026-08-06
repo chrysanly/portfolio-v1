@@ -9,11 +9,17 @@
             "maxDuration": 30
         }
     },
+    "env": {
+        "DB_CONNECTION": "sqlite",
+        "SESSION_DRIVER": "cookie",
+        "CACHE_STORE": "array",
+        "QUEUE_CONNECTION": "sync",
+        "LOG_CHANNEL": "stderr"
+    },
     "routes": [
         { "src": "/build/(.*)", "dest": "/public/build/$1" },
         { "src": "/images/(.*)", "dest": "/public/images/$1" },
         {
-            "comment": "Anything with a static file extension is served from public/ rather than booting Laravel. Matches every asset actually committed there today (favicon.svg included) plus the fonts and images the build emits.",
             "src": "/([^/]+\\.(?:ico|svg|png|jpe?g|webp|gif|pdf|txt|xml|json|webmanifest|woff2?|ttf|map))",
             "dest": "/public/$1"
         },
