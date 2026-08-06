@@ -1,0 +1,13 @@
+# Keep the deployed bundle to what actually serves requests.
+/docs
+/tests
+/.agents
+/.claude
+/.codex
+/database/database.sqlite
+/node_modules
+/phpunit.xml
+/DESIGN_SKILLS_PROMPT.md
+/install-portfolio.ps1
+/remove-auth-ui.ps1
+/cj-portfolio-implementation.zip

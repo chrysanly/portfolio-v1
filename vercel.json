@@ -1,0 +1,21 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "framework": null,
+    "installCommand": "composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader && npm ci",
+    "buildCommand": "php artisan wayfinder:generate && npm run build && php artisan config:cache && php artisan route:cache && php artisan event:cache",
+    "functions": {
+        "api/index.php": {
+            "runtime": "vercel-php@0.9.0",
+            "maxDuration": 30
+        }
+    },
+    "routes": [
+        { "src": "/build/(.*)", "dest": "/public/build/$1" },
+        { "src": "/images/(.*)", "dest": "/public/images/$1" },
+        {
+            "src": "/(favicon\\.ico|robots\\.txt|apple-touch-icon\\.png|[^/]+\\.pdf)",
+            "dest": "/public/$1"
+        },
+        { "src": "/(.*)", "dest": "/api/index.php" }
+    ]
+}
