@@ -15,6 +15,19 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        /*
+         * Vercel terminates TLS at its edge and forwards to the function over
+         * plain HTTP, so without trusting the proxy Laravel reads the scheme as
+         * http and builds every asset URL as http://. The browser then blocks
+         * all of them as mixed content on an https page — fonts, stylesheet and
+         * scripts alike — and the site renders as an unstyled blank page.
+         *
+         * `at: '*'` rather than a fixed list because Vercel's forwarding IPs are
+         * dynamic and undocumented. The function is only reachable through that
+         * proxy, so there is no untrusted path that could spoof the headers.
+         */
+        $middleware->trustProxies(at: '*');
+
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
         $middleware->web(append: [
