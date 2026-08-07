@@ -26,13 +26,22 @@
             a 419 instead of reaching the controller.
 
             DB_* is pinned to an in-memory SQLite database so RefreshDatabase can
-            never migrate:fresh the developer's `database/database.sqlite`. The
-            engine still matches what this app runs on locally, so the CHECK /
-            UNIQUE behaviour the schema relies on (RULES §7) is exercised for real.
+            never migrate:fresh a real database.
+
+            DB_URL must be blanked, and this is not optional. Every connection in
+            config/database.php reads `'url' => env('DB_URL')`, and
+            ConfigurationUrlParser::parseConfiguration() overrides the driver from
+            the URL scheme (postgresql -> pgsql) whenever that value is truthy.
+            A populated DB_URL in .env therefore beats DB_CONNECTION and
+            DB_DATABASE above, and `php artisan test` would point RefreshDatabase
+            at the production Postgres database and migrate:fresh it away. The
+            parser short-circuits on a falsy url (`if (! $url) return $config;`),
+            so an empty value restores the SQLite pinning.
         -->
         <env name="APP_ENV" value="testing"/>
         <env name="DB_CONNECTION" value="sqlite"/>
         <env name="DB_DATABASE" value=":memory:"/>
+        <env name="DB_URL" value=""/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="BROADCAST_CONNECTION" value="null"/>

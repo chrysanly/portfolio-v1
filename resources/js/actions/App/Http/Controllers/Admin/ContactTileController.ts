@@ -137,7 +137,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/Admin/ContactTileController.php:45
  * @route '/admin/contact-tiles/{contact_tile}'
  */
-export const update = (args: { contact_tile: string | number | { public_id: string | number } } | [contact_tile: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { contact_tile: string | { public_id: string } } | [contact_tile: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -152,7 +152,7 @@ update.definition = {
  * @see app/Http/Controllers/Admin/ContactTileController.php:45
  * @route '/admin/contact-tiles/{contact_tile}'
  */
-update.url = (args: { contact_tile: string | number | { public_id: string | number } } | [contact_tile: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { contact_tile: string | { public_id: string } } | [contact_tile: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { contact_tile: args }
     }
@@ -185,7 +185,7 @@ update.url = (args: { contact_tile: string | number | { public_id: string | numb
  * @see app/Http/Controllers/Admin/ContactTileController.php:45
  * @route '/admin/contact-tiles/{contact_tile}'
  */
-update.put = (args: { contact_tile: string | number | { public_id: string | number } } | [contact_tile: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { contact_tile: string | { public_id: string } } | [contact_tile: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -194,7 +194,7 @@ update.put = (args: { contact_tile: string | number | { public_id: string | numb
  * @see app/Http/Controllers/Admin/ContactTileController.php:45
  * @route '/admin/contact-tiles/{contact_tile}'
  */
-update.patch = (args: { contact_tile: string | number | { public_id: string | number } } | [contact_tile: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { contact_tile: string | { public_id: string } } | [contact_tile: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -204,7 +204,7 @@ update.patch = (args: { contact_tile: string | number | { public_id: string | nu
  * @see app/Http/Controllers/Admin/ContactTileController.php:45
  * @route '/admin/contact-tiles/{contact_tile}'
  */
-    const updateForm = (args: { contact_tile: string | number | { public_id: string | number } } | [contact_tile: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { contact_tile: string | { public_id: string } } | [contact_tile: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -219,7 +219,7 @@ update.patch = (args: { contact_tile: string | number | { public_id: string | nu
  * @see app/Http/Controllers/Admin/ContactTileController.php:45
  * @route '/admin/contact-tiles/{contact_tile}'
  */
-        updateForm.put = (args: { contact_tile: string | number | { public_id: string | number } } | [contact_tile: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { contact_tile: string | { public_id: string } } | [contact_tile: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -233,7 +233,7 @@ update.patch = (args: { contact_tile: string | number | { public_id: string | nu
  * @see app/Http/Controllers/Admin/ContactTileController.php:45
  * @route '/admin/contact-tiles/{contact_tile}'
  */
-        updateForm.patch = (args: { contact_tile: string | number | { public_id: string | number } } | [contact_tile: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.patch = (args: { contact_tile: string | { public_id: string } } | [contact_tile: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PATCH',
@@ -249,7 +249,7 @@ update.patch = (args: { contact_tile: string | number | { public_id: string | nu
  * @see app/Http/Controllers/Admin/ContactTileController.php:52
  * @route '/admin/contact-tiles/{contact_tile}'
  */
-export const destroy = (args: { contact_tile: string | number | { public_id: string | number } } | [contact_tile: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { contact_tile: string | { public_id: string } } | [contact_tile: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -264,7 +264,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Admin/ContactTileController.php:52
  * @route '/admin/contact-tiles/{contact_tile}'
  */
-destroy.url = (args: { contact_tile: string | number | { public_id: string | number } } | [contact_tile: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { contact_tile: string | { public_id: string } } | [contact_tile: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { contact_tile: args }
     }
@@ -297,7 +297,7 @@ destroy.url = (args: { contact_tile: string | number | { public_id: string | num
  * @see app/Http/Controllers/Admin/ContactTileController.php:52
  * @route '/admin/contact-tiles/{contact_tile}'
  */
-destroy.delete = (args: { contact_tile: string | number | { public_id: string | number } } | [contact_tile: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { contact_tile: string | { public_id: string } } | [contact_tile: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -307,7 +307,7 @@ destroy.delete = (args: { contact_tile: string | number | { public_id: string | 
  * @see app/Http/Controllers/Admin/ContactTileController.php:52
  * @route '/admin/contact-tiles/{contact_tile}'
  */
-    const destroyForm = (args: { contact_tile: string | number | { public_id: string | number } } | [contact_tile: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { contact_tile: string | { public_id: string } } | [contact_tile: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -322,7 +322,7 @@ destroy.delete = (args: { contact_tile: string | number | { public_id: string | 
  * @see app/Http/Controllers/Admin/ContactTileController.php:52
  * @route '/admin/contact-tiles/{contact_tile}'
  */
-        destroyForm.delete = (args: { contact_tile: string | number | { public_id: string | number } } | [contact_tile: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { contact_tile: string | { public_id: string } } | [contact_tile: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

@@ -138,7 +138,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/Admin/ExperienceController.php:43
  * @route '/admin/experiences/{experience}'
  */
-export const update = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -153,7 +153,7 @@ update.definition = {
  * @see app/Http/Controllers/Admin/ExperienceController.php:43
  * @route '/admin/experiences/{experience}'
  */
-update.url = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { experience: args }
     }
@@ -186,7 +186,7 @@ update.url = (args: { experience: string | number | { public_id: string | number
  * @see app/Http/Controllers/Admin/ExperienceController.php:43
  * @route '/admin/experiences/{experience}'
  */
-update.put = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -195,7 +195,7 @@ update.put = (args: { experience: string | number | { public_id: string | number
  * @see app/Http/Controllers/Admin/ExperienceController.php:43
  * @route '/admin/experiences/{experience}'
  */
-update.patch = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -205,7 +205,7 @@ update.patch = (args: { experience: string | number | { public_id: string | numb
  * @see app/Http/Controllers/Admin/ExperienceController.php:43
  * @route '/admin/experiences/{experience}'
  */
-    const updateForm = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -220,7 +220,7 @@ update.patch = (args: { experience: string | number | { public_id: string | numb
  * @see app/Http/Controllers/Admin/ExperienceController.php:43
  * @route '/admin/experiences/{experience}'
  */
-        updateForm.put = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -234,7 +234,7 @@ update.patch = (args: { experience: string | number | { public_id: string | numb
  * @see app/Http/Controllers/Admin/ExperienceController.php:43
  * @route '/admin/experiences/{experience}'
  */
-        updateForm.patch = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.patch = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PATCH',
@@ -250,7 +250,7 @@ update.patch = (args: { experience: string | number | { public_id: string | numb
  * @see app/Http/Controllers/Admin/ExperienceController.php:50
  * @route '/admin/experiences/{experience}'
  */
-export const destroy = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -265,7 +265,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Admin/ExperienceController.php:50
  * @route '/admin/experiences/{experience}'
  */
-destroy.url = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { experience: args }
     }
@@ -298,7 +298,7 @@ destroy.url = (args: { experience: string | number | { public_id: string | numbe
  * @see app/Http/Controllers/Admin/ExperienceController.php:50
  * @route '/admin/experiences/{experience}'
  */
-destroy.delete = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -308,7 +308,7 @@ destroy.delete = (args: { experience: string | number | { public_id: string | nu
  * @see app/Http/Controllers/Admin/ExperienceController.php:50
  * @route '/admin/experiences/{experience}'
  */
-    const destroyForm = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -323,7 +323,7 @@ destroy.delete = (args: { experience: string | number | { public_id: string | nu
  * @see app/Http/Controllers/Admin/ExperienceController.php:50
  * @route '/admin/experiences/{experience}'
  */
-        destroyForm.delete = (args: { experience: string | number | { public_id: string | number } } | [experience: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { experience: string | { public_id: string } } | [experience: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

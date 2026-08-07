@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Portfolio;
 
 use Inertia\Testing\AssertableInertia;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Every admin screen must render with its collection props as plain arrays.
@@ -33,7 +34,7 @@ final class AdminScreensRenderTest extends PortfolioAdminTestCase
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('screens')]
+    #[DataProvider('screens')]
     public function test_the_screen_renders_its_rows_as_a_plain_array(
         string $route,
         string $component,

@@ -1,15 +1,20 @@
-# database.sqlite is tracked on purpose: it is the deployed content store.
+# database.sqlite is no longer tracked and is no longer the deployed content
+# store. Production reads and writes a hosted Postgres database (Neon), so
+# /admin saves directly and the public page reflects the change immediately —
+# no commit, no redeploy.
 #
-# Production is read-only — Vercel's filesystem cannot be written to — so the
-# admin can only save on your machine. The workflow is: edit through /admin
-# locally, commit the updated database.sqlite, push, redeploy.
+# It was committed while Vercel served it read-only; its content was ported into
+# Postgres by `php artisan portfolio:port-to-pgsql` and it is now ignored, so a
+# stale local copy can never be mistaken for production data. Editing a local
+# SQLite file has no effect on the deployed site.
 #
-# This requires SESSION_DRIVER=cookie and CACHE_STORE=array in production. With
-# either left on the `database` driver, an ordinary page view attempts a write
-# and returns a 500 (verified: "attempt to write a readonly database").
-#
-# The sidecar journal/WAL files are still ignored; only the database itself is
-# committed.
+# Production requires DB_CONNECTION=pgsql plus DB_URL; SESSION_DRIVER and
+# CACHE_STORE are on the `database` driver, which the old read-only SQLite setup
+# could not support.
+*.sqlite
 *.sqlite-journal
 *.sqlite-wal
 *.sqlite-shm
+
+# Local pre-migration backups, not source.
+*.sqlite.bak

@@ -138,7 +138,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/Admin/CapabilityGroupController.php:50
  * @route '/admin/capability-groups/{capability_group}'
  */
-export const update = (args: { capability_group: string | number | { public_id: string | number } } | [capability_group: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { capability_group: string | { public_id: string } } | [capability_group: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -153,7 +153,7 @@ update.definition = {
  * @see app/Http/Controllers/Admin/CapabilityGroupController.php:50
  * @route '/admin/capability-groups/{capability_group}'
  */
-update.url = (args: { capability_group: string | number | { public_id: string | number } } | [capability_group: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { capability_group: string | { public_id: string } } | [capability_group: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { capability_group: args }
     }
@@ -186,7 +186,7 @@ update.url = (args: { capability_group: string | number | { public_id: string | 
  * @see app/Http/Controllers/Admin/CapabilityGroupController.php:50
  * @route '/admin/capability-groups/{capability_group}'
  */
-update.put = (args: { capability_group: string | number | { public_id: string | number } } | [capability_group: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { capability_group: string | { public_id: string } } | [capability_group: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -195,7 +195,7 @@ update.put = (args: { capability_group: string | number | { public_id: string | 
  * @see app/Http/Controllers/Admin/CapabilityGroupController.php:50
  * @route '/admin/capability-groups/{capability_group}'
  */
-update.patch = (args: { capability_group: string | number | { public_id: string | number } } | [capability_group: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { capability_group: string | { public_id: string } } | [capability_group: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -205,7 +205,7 @@ update.patch = (args: { capability_group: string | number | { public_id: string 
  * @see app/Http/Controllers/Admin/CapabilityGroupController.php:50
  * @route '/admin/capability-groups/{capability_group}'
  */
-    const updateForm = (args: { capability_group: string | number | { public_id: string | number } } | [capability_group: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { capability_group: string | { public_id: string } } | [capability_group: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -220,7 +220,7 @@ update.patch = (args: { capability_group: string | number | { public_id: string 
  * @see app/Http/Controllers/Admin/CapabilityGroupController.php:50
  * @route '/admin/capability-groups/{capability_group}'
  */
-        updateForm.put = (args: { capability_group: string | number | { public_id: string | number } } | [capability_group: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { capability_group: string | { public_id: string } } | [capability_group: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -234,7 +234,7 @@ update.patch = (args: { capability_group: string | number | { public_id: string 
  * @see app/Http/Controllers/Admin/CapabilityGroupController.php:50
  * @route '/admin/capability-groups/{capability_group}'
  */
-        updateForm.patch = (args: { capability_group: string | number | { public_id: string | number } } | [capability_group: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.patch = (args: { capability_group: string | { public_id: string } } | [capability_group: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PATCH',
@@ -250,7 +250,7 @@ update.patch = (args: { capability_group: string | number | { public_id: string 
  * @see app/Http/Controllers/Admin/CapabilityGroupController.php:57
  * @route '/admin/capability-groups/{capability_group}'
  */
-export const destroy = (args: { capability_group: string | number | { public_id: string | number } } | [capability_group: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { capability_group: string | { public_id: string } } | [capability_group: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -265,7 +265,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Admin/CapabilityGroupController.php:57
  * @route '/admin/capability-groups/{capability_group}'
  */
-destroy.url = (args: { capability_group: string | number | { public_id: string | number } } | [capability_group: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { capability_group: string | { public_id: string } } | [capability_group: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { capability_group: args }
     }
@@ -298,7 +298,7 @@ destroy.url = (args: { capability_group: string | number | { public_id: string |
  * @see app/Http/Controllers/Admin/CapabilityGroupController.php:57
  * @route '/admin/capability-groups/{capability_group}'
  */
-destroy.delete = (args: { capability_group: string | number | { public_id: string | number } } | [capability_group: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { capability_group: string | { public_id: string } } | [capability_group: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -308,7 +308,7 @@ destroy.delete = (args: { capability_group: string | number | { public_id: strin
  * @see app/Http/Controllers/Admin/CapabilityGroupController.php:57
  * @route '/admin/capability-groups/{capability_group}'
  */
-    const destroyForm = (args: { capability_group: string | number | { public_id: string | number } } | [capability_group: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { capability_group: string | { public_id: string } } | [capability_group: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -323,7 +323,7 @@ destroy.delete = (args: { capability_group: string | number | { public_id: strin
  * @see app/Http/Controllers/Admin/CapabilityGroupController.php:57
  * @route '/admin/capability-groups/{capability_group}'
  */
-        destroyForm.delete = (args: { capability_group: string | number | { public_id: string | number } } | [capability_group: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { capability_group: string | { public_id: string } } | [capability_group: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

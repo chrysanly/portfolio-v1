@@ -137,7 +137,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/Admin/StatController.php:43
  * @route '/admin/stats/{stat}'
  */
-export const update = (args: { stat: string | number | { public_id: string | number } } | [stat: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { stat: string | { public_id: string } } | [stat: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -152,7 +152,7 @@ update.definition = {
  * @see app/Http/Controllers/Admin/StatController.php:43
  * @route '/admin/stats/{stat}'
  */
-update.url = (args: { stat: string | number | { public_id: string | number } } | [stat: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { stat: string | { public_id: string } } | [stat: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { stat: args }
     }
@@ -185,7 +185,7 @@ update.url = (args: { stat: string | number | { public_id: string | number } } |
  * @see app/Http/Controllers/Admin/StatController.php:43
  * @route '/admin/stats/{stat}'
  */
-update.put = (args: { stat: string | number | { public_id: string | number } } | [stat: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { stat: string | { public_id: string } } | [stat: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -194,7 +194,7 @@ update.put = (args: { stat: string | number | { public_id: string | number } } |
  * @see app/Http/Controllers/Admin/StatController.php:43
  * @route '/admin/stats/{stat}'
  */
-update.patch = (args: { stat: string | number | { public_id: string | number } } | [stat: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+update.patch = (args: { stat: string | { public_id: string } } | [stat: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
@@ -204,7 +204,7 @@ update.patch = (args: { stat: string | number | { public_id: string | number } }
  * @see app/Http/Controllers/Admin/StatController.php:43
  * @route '/admin/stats/{stat}'
  */
-    const updateForm = (args: { stat: string | number | { public_id: string | number } } | [stat: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { stat: string | { public_id: string } } | [stat: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -219,7 +219,7 @@ update.patch = (args: { stat: string | number | { public_id: string | number } }
  * @see app/Http/Controllers/Admin/StatController.php:43
  * @route '/admin/stats/{stat}'
  */
-        updateForm.put = (args: { stat: string | number | { public_id: string | number } } | [stat: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { stat: string | { public_id: string } } | [stat: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',
@@ -233,7 +233,7 @@ update.patch = (args: { stat: string | number | { public_id: string | number } }
  * @see app/Http/Controllers/Admin/StatController.php:43
  * @route '/admin/stats/{stat}'
  */
-        updateForm.patch = (args: { stat: string | number | { public_id: string | number } } | [stat: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.patch = (args: { stat: string | { public_id: string } } | [stat: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PATCH',
@@ -249,7 +249,7 @@ update.patch = (args: { stat: string | number | { public_id: string | number } }
  * @see app/Http/Controllers/Admin/StatController.php:50
  * @route '/admin/stats/{stat}'
  */
-export const destroy = (args: { stat: string | number | { public_id: string | number } } | [stat: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { stat: string | { public_id: string } } | [stat: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -264,7 +264,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Admin/StatController.php:50
  * @route '/admin/stats/{stat}'
  */
-destroy.url = (args: { stat: string | number | { public_id: string | number } } | [stat: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { stat: string | { public_id: string } } | [stat: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { stat: args }
     }
@@ -297,7 +297,7 @@ destroy.url = (args: { stat: string | number | { public_id: string | number } } 
  * @see app/Http/Controllers/Admin/StatController.php:50
  * @route '/admin/stats/{stat}'
  */
-destroy.delete = (args: { stat: string | number | { public_id: string | number } } | [stat: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { stat: string | { public_id: string } } | [stat: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -307,7 +307,7 @@ destroy.delete = (args: { stat: string | number | { public_id: string | number }
  * @see app/Http/Controllers/Admin/StatController.php:50
  * @route '/admin/stats/{stat}'
  */
-    const destroyForm = (args: { stat: string | number | { public_id: string | number } } | [stat: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const destroyForm = (args: { stat: string | { public_id: string } } | [stat: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
@@ -322,7 +322,7 @@ destroy.delete = (args: { stat: string | number | { public_id: string | number }
  * @see app/Http/Controllers/Admin/StatController.php:50
  * @route '/admin/stats/{stat}'
  */
-        destroyForm.delete = (args: { stat: string | number | { public_id: string | number } } | [stat: string | number | { public_id: string | number } ] | string | number | { public_id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        destroyForm.delete = (args: { stat: string | { public_id: string } } | [stat: string | { public_id: string } ] | string | { public_id: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',

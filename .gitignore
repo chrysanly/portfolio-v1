@@ -20,6 +20,11 @@
 # tracked template is re-allowed below.
 .env.*
 !.env.example
+# .env.testing is re-allowed on purpose. It contains no credentials — an
+# in-memory SQLite database and a throwaway APP_KEY — and it is what stops the
+# live DB_URL in .env from reaching the suite, so it has to exist on every
+# machine and in CI, not just locally. Never put a real host or secret in it.
+!.env.testing
 .phpactor.json
 .phpunit.result.cache
 Homestead.json
